@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}{% endblock %} — {{ site_name }}</title>
+<style>
+body{font-family:Georgia,serif;max-width:900px;margin:0 auto;padding:24px;
+ line-height:1.6;color:#1a1a1a;background:#fdfdfb}
+a{color:#0645ad}
+header.site{border-bottom:2px solid #333;padding-bottom:10px;margin-bottom:20px;
+ display:flex;flex-wrap:wrap;gap:8px 18px;align-items:baseline}
+header.site .brand{font-size:1.3em;font-weight:bold;color:#1a1a1a;text-decoration:none}
+header.site nav{margin-left:auto;font-size:.92em}
+table.forum{width:100%;border-collapse:collapse;margin:1em 0}
+table.forum th,table.forum td{border:1px solid #bbb;padding:8px 10px;text-align:left;
+ font-size:.95em;vertical-align:top}
+table.forum th{background:#f4f4f0}
+.post{border:1px solid #bbb;border-radius:4px;margin:0 0 14px;background:#fff}
+.post .meta{background:#f4f4f0;padding:6px 12px;font-size:.88em;color:#444;
+ border-bottom:1px solid #bbb}
+.post .body{padding:10px 14px;white-space:pre-wrap;overflow-wrap:break-word}
+form.f{margin:1.2em 0}
+form.f label{display:block;margin:.7em 0 .2em;font-weight:bold}
+form.f input[type=text],form.f input[type=password],form.f input[type=email]{
+ width:100%;max-width:420px;padding:7px 9px;font-size:1em;font-family:Georgia,serif;
+ border:1px solid #999;border-radius:3px}
+form.f textarea{width:100%;min-height:160px;padding:8px 10px;font-size:1em;
+ font-family:Georgia,serif;border:1px solid #999;border-radius:3px}
+form.f button{margin-top:.8em;padding:8px 22px;font-size:1em;font-family:Georgia,serif;
+ border:1px solid #666;border-radius:3px;background:#eee;cursor:pointer}
+.error{background:#fbdcdc;border:1px solid #c66;border-radius:4px;padding:8px 12px;margin:1em 0}
+.pager{margin:1.2em 0;font-size:.95em}
+footer.site{margin-top:2.5em;color:#555;font-size:.85em;border-top:1px solid #bbb;padding-top:1em}
+.searchbar{display:flex;gap:6px;margin:0}
+.searchbar input{padding:5px 9px;font-family:Georgia,serif;font-size:.95em;
+ border:1px solid #999;border-radius:3px;width:170px}
+.searchbar button{padding:5px 12px;font-family:Georgia,serif;font-size:.95em;
+ border:1px solid #666;border-radius:3px;background:#eee;cursor:pointer}
+</style>
+</head>
+<body>
+<header class="site">
+<a class="brand" href="{{ url_for('index') }}">{{ site_name }}</a>
+<form class="searchbar" action="{{ url_for('search') }}" method="get" role="search">
+<input type="text" name="q" placeholder="Search…" aria-label="Search posts"
+       value="{{ q|default('') }}">
+<button type="submit">Search</button>
+</form>
+<nav>
+<a href="{{ url_for('metrics') }}">Metrics</a> ·
+<a href="{{ url_for('docs_index') }}">Docs</a> ·
+{% if current_user %}
+{{ current_user.username }} · <a href="{{ url_for('logout') }}">Log out</a>
+{% else %}
+<a href="{{ url_for('login') }}">Log in</a> · <a href="{{ url_for('register') }}">Register</a>
+{% endif %}
+</nav>
+</header>
+{% block content %}{% endblock %}
+<footer class="site">
+Python + PostgreSQL (TimescaleDB · pgvector/pgvectorscale · pgAI) + Apache James.
+</footer>
+</body>
+</html>

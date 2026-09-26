@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Metrics{% endblock %}
+{% block content %}
+<h1>Activity metrics</h1>
+<p style="color:#555">Daily counts from the TimescaleDB continuous aggregate
+<code>forum_daily</code> over the <code>forum_events</code> hypertable.</p>
+{% if rows %}
+<table class="forum">
+<tr><th>Day</th><th>Event</th><th>Count</th></tr>
+{% for r in rows %}
+<tr><td>{{ r.day.strftime('%Y-%m-%d') }}</td><td>{{ r.event_type }}</td><td>{{ r.n }}</td></tr>
+{% endfor %}
+</table>
+{% else %}
+<p>No metrics yet — the continuous aggregate may not be set up, or no events
+have been logged. See the stack README §4.4.</p>
+{% endif %}
+{% endblock %}

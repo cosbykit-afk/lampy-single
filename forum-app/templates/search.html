@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Search{% endblock %}
+{% block content %}
+<h1>Search posts</h1>
+<p style="color:#555">Mode: <b>{{ mode }}</b>
+{% if mode == "keyword" %} — pgAI vectorizer not detected; using keyword match.
+Set up the vectorizer per the stack README §4.4 for semantic search.{% endif %}</p>
+{% if q %}
+{% if results %}
+{% for p in results %}
+<div class="post">
+<div class="meta"><b>{{ p.username }}</b> · {{ p.created_at.strftime('%Y-%m-%d %H:%M') }}
+· in <a href="{{ url_for('thread', thread_id=p.thread_id) }}">{{ p.thread_title }}</a></div>
+<div class="body">{{ p.body[:600] }}{% if p.body|length > 600 %}…{% endif %}</div>
+</div>
+{% endfor %}
+{% else %}
+<p>No posts matched.</p>
+{% endif %}
+{% endif %}
+{% endblock %}

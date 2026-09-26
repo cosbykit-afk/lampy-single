@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Docs{% endblock %}
+{% block content %}
+<h2>Diagrams &amp; docs</h2>
+<p>Architecture diagrams for this forum. The images live in the database
+(<code>docs</code> table) and are served back out as PNG.</p>
+<ul>
+{% for d in docs %}
+  <li><a href="{{ url_for('doc_detail', slug=d.slug) }}">{{ d.title }}</a>
+      <small>({{ d.diagram_kind }} &middot; {{ d.created_at }})</small></li>
+{% else %}
+  <li><em>No documents yet.</em></li>
+{% endfor %}
+</ul>
+{% endblock %}

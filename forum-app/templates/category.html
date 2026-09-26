@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}{{ cat.name }}{% endblock %}
+{% block content %}
+<p><a href="{{ url_for('index') }}">Home</a></p>
+<h1>{{ cat.name }}</h1>
+{% if cat.description %}<p style="color:#555">{{ cat.description }}</p>{% endif %}
+<p><a href="{{ url_for('new_thread', category=cat.id) }}">Start a new thread</a></p>
+<table class="forum">
+<tr><th>Thread</th><th>By</th><th>Posts</th><th>Last post</th></tr>
+{% for t in threads %}
+<tr><td><a href="{{ url_for('thread', thread_id=t.id) }}">{{ t.title }}</a>
+{% if t.is_locked %}<span style="color:#888">(locked)</span>{% endif %}</td>
+<td>{{ t.username }}</td><td>{{ t.post_count }}</td>
+<td>{{ (t.last_post_at or t.created_at).strftime('%Y-%m-%d %H:%M') }}</td></tr>
+{% else %}
+<tr><td colspan="4">No threads yet. Start one above.</td></tr>
+{% endfor %}
+</table>
+{% endblock %}

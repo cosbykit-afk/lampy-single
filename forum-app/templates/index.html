@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+<h1>Boards</h1>
+<table class="forum">
+<tr><th>Board</th><th>Threads</th><th>Posts</th></tr>
+{% for c in cats %}
+<tr><td><a href="{{ url_for('category', cat_id=c.id) }}">{{ c.name }}</a>
+<br><span style="color:#555;font-size:.9em">{{ c.description }}</span></td>
+<td>{{ c.thread_count }}</td><td>{{ c.post_count }}</td></tr>
+{% endfor %}
+</table>
+
+<h2>Latest threads</h2>
+<table class="forum">
+<tr><th>Thread</th><th>Board</th><th>By</th><th>Posts</th><th>Last post</th></tr>
+{% for t in latest %}
+<tr><td><a href="{{ url_for('thread', thread_id=t.id) }}">{{ t.title }}</a></td>
+<td>{{ t.cat_name }}</td><td>{{ t.username }}</td><td>{{ t.post_count }}</td>
+<td>{{ (t.last_post_at or t.created_at).strftime('%Y-%m-%d %H:%M') }}</td></tr>
+{% endfor %}
+</table>
+{% endblock %}
