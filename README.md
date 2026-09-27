@@ -2,6 +2,21 @@
 
 A single Docker container that runs the full Lampy forum stack: PostgreSQL (with TimescaleDB + pgvector), Apache, Ollama (with Gwen), James mail server, code-server, pgai-vectorizer worker, and a Flask forum app.
 
+## Pull the prebuilt image
+
+No build needed — pull from either registry:
+
+```bash
+# Docker Hub
+docker pull kitcosby/lampy-single:latest
+
+# GitHub Container Registry
+docker pull ghcr.io/cosbykit-afk/lampy-single:latest
+```
+
+Both point to the same image
+(digest `sha256:69a301fb52d664e31105972d88b1d2431d923e2bb8474e2c531e08a59e004455`).
+
 ## What's inside
 
 | Program | Role |
