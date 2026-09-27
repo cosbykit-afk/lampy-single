@@ -1,0 +1,25 @@
+name: Copy image to GHCR
+
+# One-time copy of the Lampy single-container image from Docker Hub to the
+# GitHub Container Registry. Run manually from the Actions tab.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  copy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install crane
+        run: |
+          curl -sL -o /tmp/crane.tar.gz "https://github.com/google/go-containerregistry/releases/download/v0.22.1/go-containerregistry_Linux_x86_64.tar.gz"
+          tar -xzf /tmp/crane.tar.gz -C /tmp crane
+          sudo mv /tmp/crane /usr/local/bin/crane
+          crane version
+      - name: Log in to GHCR
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | crane auth login ghcr.io -u ${{ github.actor }} --password-stdin
+      - name: Copy kitcosby/lampy-single:latest to GHCR
+        run: crane copy docker.io/kitcosby/lampy-single:latest ghcr.io/cosbykit-afk/lampy-single:latest
