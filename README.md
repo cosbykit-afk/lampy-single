@@ -81,6 +81,29 @@ Checks the image filesystem for required binaries, configs, symlinks, and scans 
 - `pressure-test.sh` — image validation harness
 - `build.sh`, `build-cloud.sh` — build helpers
 
+## Build status (2026-09-28)
+
+- **Image published** — `kitcosby/lampy-single:windows-1.0.0`
+  (digest `sha256:69a301fb52d664e31105972d88b1d2431d923e2bb8474e2c531e08a59e004455`),
+  mirrored as `ghcr.io/cosbykit-afk/lampy-single:latest`.
+- **Build inputs** — the Dockerfile's `wheelhouse/` and `ollama-donor/`
+  directories come from the
+  [build-deps-v1 release](https://github.com/cosbykit-afk/lampy-deps/releases/tag/build-deps-v1)
+  on [lampy-deps](https://github.com/cosbykit-afk/lampy-deps)
+  (see that repo's README for assembly instructions and checksums).
+- **Validated** — `pressure-test.sh` passes against the published image;
+  all 7 supervisord programs start.
+
+## Known issues
+
+- **Empty `build-deps-v1` release on this repo** — a leftover tag with no
+  assets; the real dependency files are on
+  [lampy-deps](https://github.com/cosbykit-afk/lampy-deps/releases/tag/build-deps-v1).
+  Ignore the one here.
+- **`latest` tags float** — pin the digest
+  (`sha256:69a301fb52d664e31105972d88b1d2431d923e2bb8474e2c531e08a59e004455`)
+  if you need a reproducible pull.
+
 ## License
 
 Public domain — see [UNLICENSE](UNLICENSE).
